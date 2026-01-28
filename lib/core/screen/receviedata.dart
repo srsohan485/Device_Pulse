@@ -13,7 +13,8 @@ class ReceivedData extends StatelessWidget {
       appBar: AppBar(
         title: Text("Received Data"),
         centerTitle: true,
-        backgroundColor: Colors.teal,
+        backgroundColor: Colors.cyan.withOpacity(0.8),
+        shadowColor: Colors.cyanAccent,
       ),
       body: Obx(() {
         final list = controller.receivedList;

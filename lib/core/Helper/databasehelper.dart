@@ -8,7 +8,6 @@ class DBHelper {
     _db = await initDB();
     return _db!;
   }
-
   static Future<Database> initDB() async {
     final path = join(await getDatabasesPath(), 'received_data.db');
     return await openDatabase(
@@ -16,9 +15,9 @@ class DBHelper {
       await db.execute('''CREATE TABLE received (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             sender TEXT,message TEXT,time TEXT
-          )''');
-    },
-    );
+          )'''
+      );
+    },);
   }
 
   static Future<void> insertData(

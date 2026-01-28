@@ -8,7 +8,7 @@ import '../../DatacalectService/DeviceData/batterydata.dart';
 import '../../DatacalectService/DeviceData/connectservice.dart';
 import '../../DatacalectService/DeviceData/deviceservice.dart';
 
-
+// HomeController class - Manages the state and business logic for the Home screen
 class HomeController extends GetxController {
 
   int batteryLevel = 0;
@@ -23,6 +23,7 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    // Load initial data when controller starts
     loadBattery();
     loadDevice();
     loadConnectivity();
@@ -40,6 +41,16 @@ class HomeController extends GetxController {
   void onClose() {
     timer?.cancel();
     super.onClose();
+  }
+
+  // 🔹 NEW method for manual or pull-to-refresh
+  Future<void> refreshAllData() async {
+    await loadBattery();
+    await loadDevice();
+    await loadConnectivity();
+    await loadActivity();
+    await loadSteps();
+    update();
   }
 
   Future<void> loadActivity() async {
@@ -69,13 +80,14 @@ class HomeController extends GetxController {
     connectivityInfo = await ConnectivityService.getConnectivityInfo();
     update();
   }
-
+  // Determines color for battery level indicator based on percentage
   Color getBatteryColor() {
     if (batteryLevel > 50) return Colors.green;
     if (batteryLevel > 20) return Colors.orange;
     return Colors.red;
   }
 
+  // Determines color for battery temperature indicator
   Color getTempColor() {
     if (batteryTemp > 44) return Colors.red;
     if (batteryTemp > 38) return Colors.orange;

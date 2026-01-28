@@ -4,13 +4,16 @@ import '../../../../core/helper/servicenetwork.dart';
 
 class GetSendController extends GetxController {
   RxList<Map<String, dynamic>> devices = <Map<String, dynamic>>[].obs;
+  final String deviceName;
+  GetSendController({required this.deviceName});
 
   @override
   void onInit() {
     super.onInit();
-    NetworkService.startDiscovery("My Device");
+    NetworkService.startDiscovery(deviceName);
     NetworkService.deviceStream.stream.listen((deviceList) {
       devices.value = deviceList;
+      print("Detected decives: $deviceList");
     });
   }
 

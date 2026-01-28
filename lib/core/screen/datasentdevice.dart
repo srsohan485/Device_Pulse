@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 import '../controller/homecontroller.dart';
 import '../controller/sentcontroller.dart';
 
-class SendDataScreen extends StatelessWidget {
-  SendDataScreen({super.key});
+class Datasentdevice extends StatelessWidget {
+  Datasentdevice({super.key});
 
-  final sendController = Get.put(GetSendController());
+  final sendController = Get.put(GetSendController(deviceName: "My Real Device"));
   final homeController = Get.find<HomeController>();
 
   @override
@@ -16,7 +16,8 @@ class SendDataScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text("Select Device to Send"),
         centerTitle: true,
-        backgroundColor: Colors.teal,
+        backgroundColor: Colors.cyan.withOpacity(0.8),
+        shadowColor: Colors.cyanAccent,
       ),
       body: Obx(() {
         final devices = sendController.devices;
