@@ -1,0 +1,101 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../controller/receivedcontroller.dart';
+
+class ReceivedData extends StatelessWidget {
+  ReceivedData({super.key});
+  final controller = Get.put(ReceivedController());
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Received Data"),
+        centerTitle: true,
+        backgroundColor: Colors.teal,
+      ),
+      body: Obx(() {
+        final list = controller.receivedList;
+        if (list.isEmpty) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.inbox, size: 50, color: Colors.teal.shade200),
+                SizedBox(height: 10),
+                Text(
+                  "No data received yet",
+                  style: TextStyle(fontSize: 16, color: Colors.grey.shade700),
+                ),
+              ],
+            ),
+          );
+        }
+
+        return ListView.builder(
+          padding: EdgeInsets.all(15),
+          itemCount: list.length,
+          itemBuilder: (context, index) {
+            final item = list[index];
+            final sender = item['sender'] ?? 'Unknown';
+            final message = item['message'] ?? '';
+            final time = item['time'] != null
+                ? item['time'].toString().split('.')[0]
+                : '';
+
+            return Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16)),
+              elevation: 5,
+              margin: EdgeInsets.symmetric(vertical: 8),
+              shadowColor: Colors.grey.shade300,
+              child: Padding(
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.phone_android, color: Colors.teal),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: Text(
+                            sender,
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.teal.shade800),
+                          ),
+                        ),
+                        Text(
+                          time,
+                          style: TextStyle(
+                              fontSize: 12, color: Colors.grey.shade600),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.teal.shade50,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        message,
+                        style: TextStyle(
+                            fontSize: 14, color: Colors.grey.shade800),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      }),
+    );
+  }
+}
