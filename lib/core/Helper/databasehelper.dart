@@ -33,4 +33,18 @@ class DBHelper {
     final db = await database;
     return await db.query('received', orderBy: 'id DESC');
   }
+
+
+  static Future<void> deleteData(int id) async {
+    final db = await database;
+    await db.delete(
+      'received',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+    print("Deleted ${id}");
+
+  }
+
+
 }

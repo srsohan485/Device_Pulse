@@ -47,6 +47,20 @@ class NetworkService {
         } catch (e) {}
       }
     });
+
+    final myIp = (await NetworkInterface.list(type: InternetAddressType.IPv4))
+        .expand((iface) => iface.addresses)
+        .first
+        .address;
+
+    if (_devices.every((d) => d['ip'] != myIp)) {
+      _devices.add({
+        "name": deviceName, // নিজের device name
+        "ip": myIp,
+      });
+      deviceStream.add(List.from(_devices));
+    }
+
     _broadcastTimer = Timer.periodic(const Duration(seconds: 2), (_) {
       final discoveryMessage = jsonEncode({
         "type": "DISCOVERY",

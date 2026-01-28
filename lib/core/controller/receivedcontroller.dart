@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import '../../../../core/helper/databasehelper.dart';
-import '../../../../core/helper/servicenetwork.dart';
+import 'package:device_pulse/core/helper/databasehelper.dart'; // absolute path
+import 'package:device_pulse/core/helper/servicenetwork.dart';
 
 
 class ReceivedController extends GetxController {
@@ -14,8 +14,16 @@ class ReceivedController extends GetxController {
       loadAllData();
     });
   }
+  //refrash data
   void loadAllData() async {
     final allData = await DBHelper.getAllData();
-    receivedList.value = allData;
+    receivedList.value =
+    List<Map<String, dynamic>>.from(allData);
+  }
+
+  //Delete function
+  Future<void> deleteData(int id) async {
+    await DBHelper.deleteData(id);
+    receivedList.removeWhere((element) => element['id'] == id); // UI update
   }
 }

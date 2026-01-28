@@ -44,6 +44,7 @@ class ReceivedData extends StatelessWidget {
             final time = item['time'] != null
                 ? item['time'].toString().split('.')[0]
                 : '';
+            final id = item['id'] as int;
 
             return Card(
               shape: RoundedRectangleBorder(
@@ -58,7 +59,34 @@ class ReceivedData extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.phone_android, color: Colors.teal),
+                        IconButton(
+                          icon: Icon(Icons.delete, color: Colors.red),
+                          onPressed: () {
+                            // Confirm dialog
+                            showDialog(
+                              context: context,
+                              builder: (ctx) => AlertDialog(
+                                title: Text("Delete"),
+                                content: Text("Are you sure you want to delete this data?"),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(ctx).pop();
+                                    },
+                                    child: Text("Cancel"),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      controller.deleteData(id); // call controller method
+                                      Navigator.of(ctx).pop();
+                                    },
+                                    child: Text("Delete", style: TextStyle(color: Colors.red)),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
                         SizedBox(width: 10),
                         Expanded(
                           child: Text(
