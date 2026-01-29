@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'DatacalectService/DeviceService/devicesashboard.dart';
 import 'core/screen/homepage.dart';
 
 void main() {

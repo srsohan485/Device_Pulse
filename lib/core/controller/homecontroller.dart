@@ -5,8 +5,7 @@ import 'package:get/get.dart';
 import '../../DatacalectService/DeviceService/activitsecvice.dart';
 import '../../DatacalectService/DeviceService/counterservice.dart';
 import '../../DatacalectService/DeviceData/batterydata.dart';
-import '../../DatacalectService/DeviceData/connectservice.dart';
-import '../../DatacalectService/DeviceData/deviceservice.dart';
+
 
 // HomeController class - Manages the state and business logic for the Home screen
 class HomeController extends GetxController {
@@ -29,6 +28,7 @@ class HomeController extends GetxController {
     loadConnectivity();
     loadActivity();
     loadSteps();
+
     timer = Timer.periodic(const Duration(seconds: 3), (t) {
       loadBattery();
       loadConnectivity();
@@ -82,15 +82,19 @@ class HomeController extends GetxController {
   }
   // Determines color for battery level indicator based on percentage
   Color getBatteryColor() {
-    if (batteryLevel > 50) return Colors.green;
-    if (batteryLevel > 20) return Colors.orange;
-    return Colors.red;
+    if (batteryLevel >= 80) return Colors.green.shade700;
+    if (batteryLevel >= 50) return Colors.lightGreen;
+    if (batteryLevel >= 20) return Colors.orange;
+    if (batteryLevel >= 10) return Colors.deepOrange;
+    return Colors.redAccent;
   }
 
-  // Determines color for battery temperature indicator
+// Determines color for battery temperature indicator
   Color getTempColor() {
-    if (batteryTemp > 44) return Colors.red;
-    if (batteryTemp > 38) return Colors.orange;
-    return Colors.green;
+    if (batteryTemp >= 50) return Colors.redAccent;
+    if (batteryTemp >= 44) return Colors.red;
+    if (batteryTemp >= 40) return Colors.orangeAccent;
+    if (batteryTemp >= 38) return Colors.orange;
+    return Colors.green.shade600;
   }
 }
