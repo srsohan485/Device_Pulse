@@ -10,6 +10,7 @@ class GetSendController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    print("DISCOVERY STARTED");
     NetworkService.startDiscovery(deviceName);
     NetworkService.deviceStream.stream.listen((deviceList) {
       devices.value = deviceList;
